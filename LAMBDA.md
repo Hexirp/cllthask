@@ -14,8 +14,6 @@
     contrL: G :> f # :> S
     tL: G :> * f :> S
     tR: G0 :> f :> S0 -* A *- G1 :> g :> S1
-    1L: G :> ^ f :> S
-    1R: ^^
     wL1: G :> _& f :> S
     wL1: G :> &_ f :> S
     wR: G :> f -& A &- :> S
@@ -26,4 +24,11 @@
     oR: G :? f + :> S
     !L: G :> ! f :> S
     !R: G :> f ! :> S
-    ?L: G :> 
+    ?L: G :> f ? :> S
+    ?R: G :> ? f :> S
+    1L: G :> ' f :> S
+    1R: G :> '' :> S
+    TR: G :> , :> S
+    0L: G :> . :> S
+    BL: G :> "" :> S
+    BR: G :> f " :> S

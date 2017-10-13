@@ -81,3 +81,19 @@ module Language.Logic.Linear where
 
  wiuL :: [Type] -> [Type] -> Seq
  wiuL g s = Seq (Wiu : g) s
+
+ ofcoL :: Seq -> Maybe Seq
+ ofcoL (Seq (a : g) s) = Just $ Seq (Ofco a : g) s
+ ofcoL _ = Nothing
+
+ ofcoR :: Seq -> Maybe Seq
+ ofcoR (Seq [Ofco g] (a : [Whno s])) = Just $ Seq [Ofco g] (Ofco a : [Whno s])
+ ofcoR _ = Nothing
+
+ whnoL :: Seq -> Maybe Seq
+ whnoL (Seq (a : [Ofco g]) [Whno s]) = Just $ Seq (Whno a : [Ofco g]) [Whno s]
+ whnoL _ = Nothing
+
+ whnoR :: Seq -> Maybe Seq
+ whnoR (Seq g (a : s)) = Just $ Seq g (Whno a : s)
+ whnoR _ = Nothing

@@ -1,5 +1,6 @@
 module Language.Logic.Linear where
  import Prelude
+ import Control.Arrow (second)
 
  data Seq = Seq [Type] [Type] deriving Eq
 
@@ -115,3 +116,15 @@ module Language.Logic.Linear where
   False -> Nothing
   True -> Just $ Seq g (Whno a : s)
  copyR _ = Nothing
+
+ swapL :: Int -> Seq -> Maybe Seq
+ swapL n (Seq g s) = (`Seq` s) <$> pop n g
+ 
+ swapR :: Int -> Seq -> Maybe Seq
+ swapR n (Seq g s) = (g `Seq`) <$> pop n s
+
+ pop :: Int -> [a] -> Maybe [a]
+ pop n0 x0 = uncurry (:) <$> pop' n0 x0 where
+  pop' 0 [] = Nothing
+  pop' 0 (x : xs) = Just (x, xs)
+  pop' n (x : xs) = second (x :) <$> pop' (n - 1) xs

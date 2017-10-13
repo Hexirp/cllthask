@@ -35,21 +35,29 @@ module Language.Logic.Linear where
   = Just $ Seq (g0 ++ g1) (Time a b : s0 ++ s1)
  timeR _ _ = Nothing
 
+ paraL :: Seq -> Seq -> Maybe Seq
+ paraL (Seq (a : g0) s0) (Seq (b : g1) s1)
+  = Just $ Seq (Para a b : g0 ++ g1) (s0 ++ s1)
+ paraL _ _ = Nothing
+
+ paraR :: Seq -> Maybe Seq
+ paraR (Seq g (a : b : s)) = Just $ Seq g (Para a b : s)
+ paraR _ = Nothing
+
  tiuL :: Seq -> Seq
  tiuL (Seq g s) = Seq (Tiu : g) s
 
  tiuR :: Seq
  tiuR = Seq [] [Tiu]
 
- paraL :: Seq -> Seq -> Maybe Seq
- paraL (Seq (a : g0) s0) (Seq (b : g1) s1)
-  = Just $ Seq (Para a b : g0 ++ g1) (s0 ++ s1)
-
- paraR :: Seq -> Maybe Seq
- paraR (Seq g (a : b : s)) = Just $ Seq g (Para a b : s)
-
  pauL :: Seq
  pauL = Seq [Pau] []
 
  pauR :: Seq -> Seq
  pauR (Seq g s) = Seq g (Pau : s)
+
+ plusL :: Seq -> Seq -> Maybe Seq
+ plusL (Seq (a : g0) s0) (Seq (b : g1) s1) = case g0 == g1 && s0 == s1 of
+  False -> Nothing
+  True -> Just $ Seq (Plus a b : g0) s0
+ plusL _ _ = Nothing

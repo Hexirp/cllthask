@@ -25,3 +25,12 @@ module Language.Logic.Linear where
   False -> Nothing
   True -> Just $ Seq (g0 ++ g1) (s0 ++ s1)
  cut _ _ = Nothing
+
+ timeL :: Seq -> Maybe Seq
+ timeL (Seq (a : b : g) s) = Just $ Seq (Time a b : g) s
+ timeL _ = Nothing
+
+ timeR :: Seq -> Seq -> Maybe Seq
+ timeR (Seq g0 (a : s0)) (Seq g1 (b : s1))
+  = Just $ Seq (g0 ++ g1) (Time a b : s0 ++ s1)
+ timeR _ _ = Nothing

@@ -34,3 +34,10 @@ module Language.Logic.Linear where
  timeR (Seq g0 (a : s0)) (Seq g1 (b : s1))
   = Just $ Seq (g0 ++ g1) (Time a b : s0 ++ s1)
  timeR _ _ = Nothing
+
+ paraL :: Seq -> Seq -> Maybe Seq
+ paraL (Seq (a : g0) s0) (Seq (b : g1) s1)
+  = Just $ Seq (Para a b : g0 ++ g1) (s0 ++ s1)
+
+ paraR :: Seq -> Maybe Seq
+ paraR (Seq g (a : b : s)) = Just $ Seq g (Para a b : s)

@@ -61,3 +61,23 @@ module Language.Logic.Linear where
   False -> Nothing
   True -> Just $ Seq (Plus a b : g0) s0
  plusL _ _ = Nothing
+
+ plusR :: Bool -> Seq -> Maybe Seq
+ plusR x (Seq (Plus a b : g) s)
+  = Just $ Seq (case x of { False -> a; True -> b } : g) s
+ plusR _ _ = Nothing
+
+ withL :: Bool -> Seq -> Maybe Seq
+ withL x (Seq g (With a b : s))
+  = Just $ Seq g (case x of { False -> a; True -> b } : s)
+
+ withR :: Seq -> Seq -> Maybe Seq
+ withR (Seq g0 (a : s0)) (Seq g1 (b : s1)) = case g0 == g1 && s0 == s1 of
+  False -> Nothing
+  True -> Just $ Seq g0 (With a b : s0)
+
+ pluR :: [Type] -> [Type] -> Seq
+ pluR g s = Seq g (Plu : s)
+
+ wiuL :: [Type] -> [Type] -> Seq
+ wiuL g s = Seq (Wiu : g) s

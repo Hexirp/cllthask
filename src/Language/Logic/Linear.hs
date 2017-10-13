@@ -97,3 +97,21 @@ module Language.Logic.Linear where
  whnoR :: Seq -> Maybe Seq
  whnoR (Seq g (a : s)) = Just $ Seq g (Whno a : s)
  whnoR _ = Nothing
+
+ weakL :: Type -> Seq -> Seq
+ weakL a (Seq g s) = Seq (Ofco a : g) s
+
+ weakR :: Type -> Seq -> Seq
+ weakR a (Seq g s) = Seq g (Whno a : s)
+
+ copyL :: Seq -> Maybe Seq
+ copyL (Seq (Ofco a : Ofco b : g) s) = case a == b of
+  False -> Nothing
+  True -> Just $ Seq (Ofco a : g) s
+ copyL _ = Nothing
+
+ copyR :: Seq -> Maybe Seq
+ copyR (Seq g (Whno a : Whno b : s)) = case a == b of
+  False -> Nothing
+  True -> Just $ Seq g (Whno a : s)
+ copyR _ = Nothing

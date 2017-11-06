@@ -49,3 +49,14 @@
     |- ~1 + A + ~A + _|_
     1 * A |- A + _|_
     A |- A
+
+    getChar :: REAL -> 0 | (Char * REAL)
+    putChar :: Char -> REAL -> 0 | (1 * REAL)
+
+    A * (A -> B) |- B
+    A * (~A + B) |- B
+    A * ~A |-            B |- B
+    A |- A
+
+    ptr_get :: Storable a -> Setted a l -> Ptr l -> Setted a l * a
+    ptr_set :: Storable a -> Setted a l -> Ptr l -> a -> Setted a l * _|_

@@ -5,19 +5,24 @@ module Main where
  main = getLine >>= print . foldMap parse
 
  parse :: Char -> Expr
- parse '(' = Expr 0 1
- parse ')' = Expr 1 0
- parse _   = Expr 0 0
+ parse '1' = Head
+ parse '0' = Other
+ parse _   = Invaid
 
- data Expr = Expr Int Int
+ data Expr = Head | Other | Invaid
 
  instance Monoid Expr where
-  mempty = Expr 0 0
-  mappend (Expr m n) (Expr o p) = case compare n o of
-   LT -> Expr (o - n + m) p
-   EQ -> Expr m p
-   GT -> Expr m (n - o + p)
+  mempty = Other
+  mappend Head Head = Head
+  mappend Head Other = Head
+  mappend Head Invaid = Invaid
+  mappend Other Head = Other
+  mappend Other Other = Other
+  mappend Other Invaid = Invaid
+  mappend Invaid Head = Invaid
+  mappend Invaid Other = Invaid
+  mappend Invaid Invaid = Invaid
 
  instance Show Expr where
-  show (Expr 0 0) = "Yes"
-  show _          = "No"
+  show Head = "Yes"
+  show _    = "No"

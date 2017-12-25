@@ -12,5 +12,23 @@ module Main where
 
  run :: String -> St -> St
  run w st = case search w st of
-  Nothing -> failureSt
-  Just f -> f St
+  Nothing -> st
+  Just f -> case (f St) of
+   Nothing -> st
+   Just st' -> st'
+ 
+ search :: String -> St -> Maybe (St -> Maybe St)
+ search w (St ns _) = go ns where
+  go [] = Nothing
+  go ((x, f) : ns') = case w == x of
+   False -> go ns'
+   True -> Just f
+
+ data St = St NameSpace Stack
+
+ type NameSpace = [(String, St -> Maybe St)]
+
+ type Stack = [String]
+
+ emptySt :: St
+ emptySt 

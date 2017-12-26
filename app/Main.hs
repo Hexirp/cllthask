@@ -2,33 +2,21 @@ module Main where
  import Prelude
 
  main :: IO ()
- main = main0 emptySt
+ main = getLine >>= putStrLn . check . foldMap parse
 
- main0 :: St -> IO ()
- main0 st = getLine >>= next . foldr run st . words
+ data Expr = Expr String
 
- next :: St -> IO ()
- next st = show st >> main0 st
+ check :: Expr -> String
+ check (Expr "true") = "OK!"
+ check _             = "NG!"
 
- run :: String -> St -> St
- run w st = case search w st of
-  Nothing -> st
-  Just f -> case (f St) of
-   Nothing -> st
-   Just st' -> st'
- 
- search :: String -> St -> Maybe (St -> Maybe St)
- search w (St ns _) = go ns where
-  go [] = Nothing
-  go ((x, f) : ns') = case w == x of
-   False -> go ns'
-   True -> Just f
+ parse :: Char -> Expr
+ parse = Expr . singleton
 
- data St = St NameSpace Stack
+ instance Monoid Expr where
+  mempty = Expr []
 
- type NameSpace = [(String, St -> Maybe St)]
+  mappend (Expr a) (Expr b) = Expr (mappend a b)
 
- type Stack = [String]
-
- emptySt :: St
- emptySt 
+ singleton :: a -> [a]
+ singleton a = [a]

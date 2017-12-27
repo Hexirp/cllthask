@@ -18,3 +18,5 @@ lambda
   out X Y Z
   body ...
 ```
+
+これの型は`A * B * C |- X + Y + Z`になる。

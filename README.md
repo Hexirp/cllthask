@@ -4,7 +4,12 @@
 
 ## 参考文献
 
+線形論理そのものについて
+
 * [線形論理 - Wikipedia](https://ja.wikipedia.org/wiki/%E7%B7%9A%E5%BD%A2%E8%AB%96%E7%90%86)
 * [Linear logic - Wikipedia](https://en.wikipedia.org/wiki/Linear_logic)
-* [対称λ計算の基礎理論](https://www.jstage.jst.go.jp/article/jssst/26/2/26_2_2_3/_article/-char/ja/)
-* [ATSプログラミング入門](http://jats-ug.metasepi.org/doc/ATS2/INT2PROGINATS/book1.html)
+
+線形論理をどのようにプログラミングへ応用するか？
+
+* [haskell/linear-type.md at master · lotz84/haskell](https://github.com/lotz84/haskell/blob/d8d4b4f0ea060210ed8dff19aaa416382b6ac5f5/docs/linear-type.md) - 多数のリンク
+* [ATSプログラミング入門](http://jats-ug.metasepi.org/doc/ATS2/INT2PROGINATS/book1.html) - 実際に観 (view) という線形論理の値のように複製・削除できない値を持ち、それをC言語レベルの操作を安全に行うために使うプログラミング言語

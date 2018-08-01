@@ -1,18 +1,25 @@
-version: '0.1.0.0'
-category: Other
-author: Hexirp
-maintainer: Hexirp@users.noreply.github.com
-copyright: 2017 Hexirp
-license: BSD3
-github: Hexirp/cllthask
+name:                cllthask
+version:             0.1.0.0
+github:              "Hexirp/cllthask"
+license:             BSD3
+author:              "Hexirp"
+maintainer:          "Hexirp@users.noreply.github.com"
+copyright:           "2018 Hexirp"
+
 extra-source-files:
 - README.md
+
+# synopsis:            Short description of your package
+# category:            Other
+
+description:         Please see the README on GitHub at <https://github.com/Hexirp/cllthask#readme>
+
+dependencies:
+- base >=4.7 && <5
+
 library:
   source-dirs: src
-  exposed-modules:
-  - Lib
-  dependencies:
-  - base >=4.7 && <5
+
 executables:
   cllthask-exe:
     main: Main.hs
@@ -22,8 +29,8 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - base
     - cllthask
+
 tests:
   cllthask-test:
     main: Spec.hs
@@ -33,5 +40,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - base
     - cllthask

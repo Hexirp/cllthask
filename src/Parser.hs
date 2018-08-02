@@ -22,7 +22,7 @@ module Parser where
  ppArgs = unlines . ppArgs''
 
  ppArgs' :: Args -> [String]
- ppArgs' = enchant . ppArgs' where
+ ppArgs' = enchant . ppArgs'' where
   enchant [] = []
   enchant (x : xs) = (',' : ' ' : x) : fmap (\x -> ' ' : ' ' : x) xs
 

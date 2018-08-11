@@ -27,4 +27,4 @@ module Parser where
   enchant (x : xs) = (',' : ' ' : x) : fmap (\x -> ' ' : ' ' : x) xs
 
  ppArgs'' :: Args -> [String]
- ppArgs'' = join . fmap ppFunc'
+ ppArgs'' = concat . map ppFunc'

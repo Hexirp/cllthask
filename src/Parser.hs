@@ -24,7 +24,24 @@ module Parser where
  ppArgs' :: Args -> [String]
  ppArgs' = enchant . ppArgs'' where
   enchant [] = []
-  enchant (x : xs) = (',' : ' ' : x) : fmap (\x -> ' ' : ' ' : x) xs
+  enchant (x : xs) = (',' : ' ' : x) : map (\x -> ' ' : ' ' : x) xs
 
  ppArgs'' :: Args -> [String]
  ppArgs'' = concat . map ppFunc'
+
+ paTree :: String -> Tree
+ paTree = paFunc
+
+ paFunc :: String -> Func
+ paFunc = paFunc' . lines
+
+ paFunc' :: [String] -> Func
+ paFunc' (func : args) = Func func (paArgs' args)
+
+ paArgs' :: Args -> [String]
+ paArgs' = ppArgs'' . enchant where
+  enchant [] = []
+  enchant (x : xs) = undefined
+ 
+ paArgs'' :: Args -> [String]
+ paArgs'' = undefined

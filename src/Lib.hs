@@ -1,6 +1,6 @@
 module Lib 
  ( Once
- , wrap
+ , wrapOnce
  ) where
 
  import Prelude
@@ -11,15 +11,22 @@ module Lib
 
  newtype Once a = UnsafeWrapOnce { unsafeUnwrapOnce :: IO a }
 
- wrap :: a -> Once a
- wrap a = UnsafeWrapOnce $ wrap1 a
+ wrapOnce :: a -> Once a
+ wrapOnce a = UnsafeWrapOnce $ wrap a
 
- wrap1 :: a -> IO a
- wrap1 a = join $ wrap2 a <$> newIORef False
+ wrap :: a -> IO a
+ wrap a = join $ wrap2 a <$> newTVar False
 
- wrap2 :: a -> IORef Bool -> IO a
- wrap2 a ref = join $ wrap3 a ref <$> readIORef ref
+ wrap1 :: a -> TVar Bool -> IO a
+ wrap1 a ref = atomically $ wrap2 a ref
 
- wrap3 :: a -> IORef Bool -> Bool -> IO a
- wrap3 a ref False = const a <$> writeIORef ref True
- wrap3 a ref True  = error "[HasMovedError] The value has moved."
+ wrap2 :: a -> TVar Bool -> STM a
+ wrap2 a ref = join $ wrap3 a ref <$> readTVar ref
+
+ wrap3 :: a -> TVar Bool -> Bool -> STM a
+ wrap3 a ref False = const a <$> writeTVar ref True
+ wrap3 a ref True  = throwSTM "[HasMovedError] The value has moved."
+
+ data HasMovedError = HasMovedError deriving Show
+
+ instance Exception HasMovedError

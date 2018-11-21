@@ -3,7 +3,7 @@ module Lib where
  import Prelude
 
  import Control.Monad (join)
- import Control.Exception (Exception)
+ import Control.Exception (Exception, evaluate)
 
  import Control.DeepSeq
 
@@ -32,7 +32,10 @@ module Lib where
  wrapOnce_4 a ref True  = throwSTM HasMovedError
 
  wrapOnceStrict :: NFData a => a -> IO (Once a)
- wrapOnceStrict a = join $ evaluate . deepseq a <$> wrapOnce a
+ wrapOnceStrict a = wrapOnceStrict_0 a
+
+ wrapOnceStrict_0 :: NFData a => a -> IO (Once a)
+ wrapOnceStrict_0 a = join $ evaluate . deepseq a <$> wrapOnce a
 
  data HasMovedError = HasMovedError deriving Show
 

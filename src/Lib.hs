@@ -9,8 +9,6 @@ module Lib
 
  import Data.IORef
 
- import Control.Exception
-
  newtype Once a = UnsafeWrapOnce { unsafeUnwrapOnce :: IO a }
 
  wrap :: a -> Once a

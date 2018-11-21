@@ -45,10 +45,13 @@ module Lib where
 
  type With a b = forall r. Impl (Plus (Impl a r) (Impl b r)) r
 
- type Impl a b = Once a -> IO b
+ type Impl a b = Once a -> IO (Once b)
 
  idmap :: Impl a a
- idmap a = unsafeUnwrapOnce a
+ idmap a = return a
+
+ compose :: Impl b c -> Impl a b -> Impl a c
+ compose f g x = join $ f <$> g x
 
  data HasMovedError = HasMovedError deriving Show
 

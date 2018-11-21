@@ -6,6 +6,9 @@ module Lib
  import Prelude
 
  import Control.Monad (join)
+ import Control.Exception (Exception)
+ import Control.Monad.STM
+ import Control.Concurrent.STM.TVar
 
  import Data.IORef
 
@@ -25,7 +28,7 @@ module Lib
 
  wrap3 :: a -> TVar Bool -> Bool -> STM a
  wrap3 a ref False = const a <$> writeTVar ref True
- wrap3 a ref True  = throwSTM "[HasMovedError] The value has moved."
+ wrap3 a ref True  = throwSTM HasMovedError
 
  data HasMovedError = HasMovedError deriving Show
 

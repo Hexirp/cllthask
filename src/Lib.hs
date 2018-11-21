@@ -24,8 +24,4 @@ module Lib
 
  wrap3 :: a -> IORef Bool -> Bool -> IO a
  wrap3 a ref False = const a <$> writeIORef ref True
- wrap3 a ref True  = throwIO $ HasDroppedError
-
- data HasDroppedError = HasDroppedError
-
- instance Exception HasDroppedError
+ wrap3 a ref True  = error "[HasMovedError] The value has moved."

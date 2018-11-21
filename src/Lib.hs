@@ -4,10 +4,11 @@ module Lib where
 
  import Control.Monad (join)
  import Control.Exception (Exception)
+
+ import Control.DeepSeq
+
  import Control.Monad.STM
  import Control.Concurrent.STM.TVar
-
- import Data.IORef
 
  newtype Once a = UnsafeWrapOnce { unsafeUnwrapOnce :: IO a }
 
@@ -29,6 +30,9 @@ module Lib where
  wrapOnce_4 :: a -> TVar Bool -> Bool -> STM a
  wrapOnce_4 a ref False = const a <$> writeTVar ref True
  wrapOnce_4 a ref True  = throwSTM HasMovedError
+
+ wrapOnceStrict :: NFData a => a -> IO (Once a)
+ wrapOnceStrict a = join $ evaluate . deepseq a <$> wrapOnce a
 
  data HasMovedError = HasMovedError deriving Show
 

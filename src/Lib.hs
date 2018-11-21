@@ -1,3 +1,5 @@
+{-# LANGUAGE RankNTypes #-}
+
 module Lib where
 
  import Prelude
@@ -37,11 +39,11 @@ module Lib where
  wrapOnceStrict_0 :: NFData a => a -> IO (Once a)
  wrapOnceStrict_0 a = join $ evaluate . deepseq a <$> wrapOnce a
 
- type Plus a b = Once (Either (Once a) (Once b))
+ type Plus a b = Either (Once a) (Once b)
 
- type Tensor a b = Once (Once a, Once b)
+ type Tensor a b = (Once a, Once b)
 
- newtype With a b = WrapWith { unwrapWith :: forall r. Plus (Impl a r) (Impl b r) -> IO r }
+ type With a b = forall r. Impl (Plus (Impl a r) (Impl b r)) r
 
  type Impl a b = Once a -> IO b
 

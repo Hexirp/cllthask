@@ -1,7 +1,4 @@
-module Lib 
- ( Once
- , wrapOnce
- ) where
+module Lib where
 
  import Prelude
 

@@ -47,6 +47,9 @@ module Lib where
 
  type Impl a b = Once a -> IO b
 
+ idmap :: Impl a a
+ idmap a = unsafeUnwrapOnce a
+
  data HasMovedError = HasMovedError deriving Show
 
  instance Exception HasMovedError

@@ -41,6 +41,10 @@ module Lib where
 
  type Tensor a b = Once (Once a, Once b)
 
+ newtype With a b = WrapWith { unwrapWith :: forall r. Plus (Impl a r) (Impl b r) -> IO r }
+
+ type Impl a b = Once a -> IO b
+
  data HasMovedError = HasMovedError deriving Show
 
  instance Exception HasMovedError

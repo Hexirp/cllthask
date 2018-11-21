@@ -1,12 +1,13 @@
 module Main where
+
  import Prelude
 
- import Control.Monad (unless)
- 
- import System.IO (hFlush, stdout)
+ import Lib
 
  main :: IO ()
  main = do
-  input <- putStr "REPL> " >> hFlush stdout >> getLine
-
-  unless (input == ":quit") $ putStrLn input >> main
+  let a = wrapOnce 1
+  a1 <- unsafeUnwrapOnce a
+  print a1
+  a2 <- unsafeUnwrapOnce a
+  print a2

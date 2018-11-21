@@ -37,6 +37,10 @@ module Lib where
  wrapOnceStrict_0 :: NFData a => a -> IO (Once a)
  wrapOnceStrict_0 a = join $ evaluate . deepseq a <$> wrapOnce a
 
+ type Plus a b = Once (Either (Once a) (Once b))
+
+ type Tensor a b = Once (Once a, Once b)
+
  data HasMovedError = HasMovedError deriving Show
 
  instance Exception HasMovedError

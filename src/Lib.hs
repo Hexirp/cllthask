@@ -11,21 +11,24 @@ module Lib where
 
  newtype Once a = UnsafeWrapOnce { unsafeUnwrapOnce :: IO a }
 
- wrapOnce :: a -> Once a
- wrapOnce a = UnsafeWrapOnce $ wrap a
+ wrapOnce :: a -> IO (Once a)
+ wrapOnce a = wrapOnce_0 a
 
- wrap :: a -> IO a
- wrap a = join $ wrap1 a <$> newTVarIO False
+ wrapOnce_0 :: a -> IO (Once a)
+ wrapOnce_0 a = wrapOnce_1 a <$> newTVarIO False
 
- wrap1 :: a -> TVar Bool -> IO a
- wrap1 a ref = atomically $ wrap2 a ref
+ wrapOnce_1 :: a -> TVar Bool -> Once a
+ wrapOnce_1 a ref = UnsafeWrapOnce $ wrapOnce_2 a ref
 
- wrap2 :: a -> TVar Bool -> STM a
- wrap2 a ref = join $ wrap3 a ref <$> readTVar ref
+ wrapOnce_2 :: a -> TVar Bool -> IO a
+ wrapOnce_2 a ref = atomically $ wrapOnce_3 a ref
 
- wrap3 :: a -> TVar Bool -> Bool -> STM a
- wrap3 a ref False = const a <$> writeTVar ref True
- wrap3 a ref True  = throwSTM HasMovedError
+ wrapOnce_3 :: a -> TVar Bool -> STM a
+ wrapOnce_3 a ref = join $ wrapOnce_4 a ref <$> readTVar ref
+
+ wrapOnce_4 :: a -> TVar Bool -> Bool -> STM a
+ wrapOnce_4 a ref False = const a <$> writeTVar ref True
+ wrapOnce_4 a ref True  = throwSTM HasMovedError
 
  data HasMovedError = HasMovedError deriving Show
 

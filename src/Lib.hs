@@ -18,7 +18,7 @@ module Lib
  wrapOnce a = UnsafeWrapOnce $ wrap a
 
  wrap :: a -> IO a
- wrap a = join $ (wrap2 a :: TVar Bool -> IO a) <$> newTVarIO False
+ wrap a = join $ wrap1 a <$> newTVarIO False
 
  wrap1 :: a -> TVar Bool -> IO a
  wrap1 a ref = atomically $ wrap2 a ref

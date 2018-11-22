@@ -1,13 +1,16 @@
+{-# LANGUAGE RankNTypes #-}
+
 module Lib where
 
  import Prelude
 
  import Control.Monad (join)
- import Control.Exception (Exception)
+ import Control.Exception (Exception, evaluate)
+
+ import Control.DeepSeq
+
  import Control.Monad.STM
  import Control.Concurrent.STM.TVar
-
- import Data.IORef
 
  newtype Once a = UnsafeWrapOnce { unsafeUnwrapOnce :: IO a }
 
@@ -29,6 +32,26 @@ module Lib where
  wrapOnce_4 :: a -> TVar Bool -> Bool -> STM a
  wrapOnce_4 a ref False = const a <$> writeTVar ref True
  wrapOnce_4 a ref True  = throwSTM HasMovedError
+
+ wrapOnceStrict :: NFData a => a -> IO (Once a)
+ wrapOnceStrict a = wrapOnceStrict_0 a
+
+ wrapOnceStrict_0 :: NFData a => a -> IO (Once a)
+ wrapOnceStrict_0 a = join $ evaluate . deepseq a <$> wrapOnce a
+
+ type Plus a b = Either (Once a) (Once b)
+
+ type Tensor a b = (Once a, Once b)
+
+ type With a b = forall r. Impl (Plus (Impl a r) (Impl b r)) r
+
+ type Impl a b = Once a -> IO (Once b)
+
+ idmap :: Impl a a
+ idmap a = return a
+
+ compose :: Impl b c -> Impl a b -> Impl a c
+ compose f g x = join $ f <$> g x
 
  data HasMovedError = HasMovedError deriving Show
 

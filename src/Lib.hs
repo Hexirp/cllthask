@@ -53,6 +53,9 @@ module Lib where
  compose :: Impl b c -> Impl a b -> Impl a c
  compose f g x = join $ f <$> g x
 
+ plusL :: Impl a c -> Impl b c -> Impl (Plus a b) c
+ plusL f g = undefined
+
  data HasMovedError = HasMovedError deriving Show
 
  instance Exception HasMovedError

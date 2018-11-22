@@ -6,7 +6,8 @@ module Main where
 
  main :: IO ()
  main = do
-  let a = wrapOnce 1
+  a <- wrapOnce 1
+
   a1 <- unsafeUnwrapOnce a
   print a1
   a2 <- unsafeUnwrapOnce a

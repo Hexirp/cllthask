@@ -64,10 +64,10 @@ module Lib where
  plusL_1 _ g (Right b) = g b
 
  plusR1 :: Impl a (Plus a b)
- plusR1 a = Left a
+ plusR1 a = return $ Left a
 
  plusR2 :: Impl b (Plus a b)
- plusR2 b = Right b
+ plusR2 b = return $ Right b
 
  data HasMovedError = HasMovedError deriving Show
 

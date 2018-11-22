@@ -56,7 +56,7 @@ module Lib where
  plusL :: Impl a c -> Impl b c -> Impl (Plus a b) c
  plusL f g x = plusL_0 f g x
 
- plusL_0 :: Impl a c -> Impl b c -> Impl a c
+ plusL_0 :: Impl a c -> Impl b c -> Impl (Plus a b) c
  plusL_0 f g x = join $ plusL_1 f g <$> unsafeUnwrapOnce x
 
  plusL_1 :: Impl a c -> Impl b c -> Either (Once a) (Once b) -> IO c

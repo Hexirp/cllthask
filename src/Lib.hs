@@ -54,7 +54,14 @@ module Lib where
  compose f g x = join $ f <$> (join $ wrapOnce <$> g x)
 
  plusL :: Impl a c -> Impl b c -> Impl (Plus a b) c
- plusL f g = undefined
+ plusL f g x = plusL_0 f g x
+
+ plusL_0 :: Impl a c -> Impl b c -> Impl a c
+ plusL_0 f g x = join $ plusL_1 f g <$> unsafeUnwrapOnce x
+
+ plusL_1 :: Impl a c -> Impl b c -> Either (Once a) (Once b) -> IO c
+ plusL_1 f _ (Left a)  = f a
+ plusL_1 _ g (Right b) = g b
 
  data HasMovedError = HasMovedError deriving Show
 

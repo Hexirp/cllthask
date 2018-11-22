@@ -45,13 +45,13 @@ module Lib where
 
  type With a b = forall r. Impl (Plus (Impl a r) (Impl b r)) r
 
- type Impl a b = Once a -> IO (Once b)
+ type Impl a b = Once a -> IO b
 
  idmap :: Impl a a
- idmap a = return a
+ idmap a = join $ wrap <$> unsafeUnwrapOnce a
 
  compose :: Impl b c -> Impl a b -> Impl a c
- compose f g x = join $ f <$> g x
+ compose f g x = join $ f <$> join $ wrap <$> g x
 
  plusL :: Impl a c -> Impl b c -> Impl (Plus a b) c
  plusL f g = undefined

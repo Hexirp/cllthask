@@ -48,7 +48,7 @@ module Lib where
  type Impl a b = Once a -> IO b
 
  idmap :: Impl a a
- idmap a = join $ wrapOnce <$> unsafeUnwrapOnce a
+ idmap a = unsafeUnwrapOnce a
 
  compose :: Impl b c -> Impl a b -> Impl a c
  compose f g x = join $ f <$> (join $ wrapOnce <$> g x)

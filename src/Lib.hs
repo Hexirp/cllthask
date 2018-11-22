@@ -63,6 +63,12 @@ module Lib where
  plusL_1 f _ (Left a)  = f a
  plusL_1 _ g (Right b) = g b
 
+ plusR1 :: Impl a (Plus a b)
+ plusR1 a = Left a
+
+ plusR2 :: Impl b (Plus a b)
+ plusR2 b = Right b
+
  data HasMovedError = HasMovedError deriving Show
 
  instance Exception HasMovedError

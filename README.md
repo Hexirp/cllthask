@@ -11,5 +11,5 @@
 
 プログラミングへの応用。
 
-* [haskell/linear-type.md at master · lotz84/haskell](https://github.com/lotz84/haskell/blob/d8d4b4f0ea060210ed8dff19aaa416382b6ac5f5/docs/linear-type.md) - Haskell での線形型について。
+* [haskell/linear-type.md at master · lotz84/haskell](https://github.com/lotz84/haskell/blob/76b0e39efc0a001c0618c5001f39105d0ae48c29/docs/linear-type.md) - Haskell での線形型について。
 * [ATSプログラミング入門](http://jats-ug.metasepi.org/doc/ATS2/INT2PROGINATS/book1.html) - 実際に観 (view) という線形論理の値のように複製・削除できない値を持ち、それをメモリに関する操作を安全に行うために使うプログラミング言語。

@@ -6,4 +6,4 @@ module Lib where
   Atom String | Neg Type | Times Type Type | Par Type Type | One | Bottom
 
 
- data Vdash = Vdash Type Type
+ data Tee = Tee Type Type

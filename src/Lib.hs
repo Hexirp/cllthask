@@ -4,3 +4,6 @@ module Lib where
 
  data Type =
   Atom String | Neg Type | Times Type Type | Par Type Type | One | Bottom
+
+
+ data Vdash = Vdash Type Type

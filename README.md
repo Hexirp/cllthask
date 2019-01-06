@@ -2,6 +2,38 @@
 
 線形論理を基礎としたプログラミング言語。
 
+## 設計
+
+関数の結合を中心に据える。連鎖型プログラミング言語と似たようなものだと思えば
+良い（型検査は厳密に行われるが）。
+
+```text
+function_1
+function_2
+function_3
+```
+
+このような式は、Haskell で書くと `function_3 . function_2 . function_1` という
+風になる。
+
+```tex
+function_1
+, function_1_a_1
+, function_1_b_1
+  function_1_b_2
+function_2
+,
+ function_2_a_1
+,
+ function_2_b_1
+ function_2_b_2
+```
+
+関数を取って関数を返す高階関数の書き方については二種類考えていて、上の式は
+Haskell で `function_2 function_2_a_1 (function_2_b_2 . function_2_b_1) .
+function_1 function_1_a_1 (function_1_b_2 . function_1_b_1)` となる。両方とも
+許される形で行こうかと思っている。
+
 ## 参考文献
 
 線形論理そのものについて。

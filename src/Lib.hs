@@ -8,6 +8,17 @@ module Lib where
  data Tee = Tee Type Type
 
  data Tree =
-  I Type
-   | Cut Tee Tee
-   | AssocT Type Type
+  Cut Tree Tree
+   | I Type
+   | AssocTL Type Type Type -- (a * b) * c |- a * (b * c)
+   | AssocTR Type Type Type -- a * (b * c) |- (a * b) * c
+   | UnitTLL Type           -- 1 * a |- a
+   | UnitTLR Type           -- a |- 1 * a
+   | UnitTRL Type           -- a * 1 |- a
+   | UnitTRR Type           -- a |- a * 1
+   | AssocPL Type Type Type -- (a + b) + c |- ...
+   | AssocPR Type Type Type
+   | UnitPLL Type
+   | UnitPLR Type
+   | UnitPRL Type
+   | UnitPRR Type
